@@ -1,0 +1,44 @@
+mkdir ~/HyperledgerComposer
+export COMPOSER_ROOT=~/HyperledgerComposer
+cd $COMPOSER_ROOT
+mkdir fabric-dev-servers && cd fabric-dev-servers
+curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.zip
+unzip fabric-dev-servers.zip
+
+cd $COMPOSER_ROOT/fabric-dev-servers
+./downloadFabric.sh
+./startFabric.sh
+./createPeerAdminCard.sh
+
+cd $COMPOSER_ROOT/developerWorks/iot-perishable-network
+
+#if this doesnt work
+composer network deploy -a dist/rental-agreement.bna -A admin -S adminpw -c PeerAdmin@hlfv1 -f networkadmin.card
+#try this
+curl -sSL https://hyperledger.github.io/composer/install-hlfv1.sh | bash
+
+composer card import --file networkadmin.card
+
+npm install -g composer-rest-server
+
+composer-rest-server -v
+v0.15.0
+
+$ composer-rest-server
+? Enter the name of the business network card to use: admin@iot-perishable-network
+? Specify if you want namespaces in the generated REST API: always use namespaces
+? Specify if you want to enable authentication for the REST API using Passport: No
+? Specify if you want to enable event publication over WebSockets: No
+? Specify if you want to enable TLS security for the REST API: No
+ 
+To restart the REST server using the same options, issue the following command:
+   composer-rest-server -c admin@iot-perishable-network -n always
+ 
+Discovering types from business network definition ...
+Discovered types from business network definition
+Generating schemas for all types in business network definition ...
+Generated schemas for all types in business network definition
+Adding schemas for all types to Loopback ...
+Added schemas for all types to Loopback
+Web server listening at: http://localhost:3000
+Browse your REST API at http://localhost:3000/explorer
