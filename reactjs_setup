@@ -20,6 +20,8 @@ touch webpack.config.js
 
 	module.exports = config;
 
+mkdir src && cd src && mkdir client && cd client &&  mkdir app && cd app && vim index.jsx
+
 in ./src/client/app/index.jsx
 	console.log('Hello World!');
 
