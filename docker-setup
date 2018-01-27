@@ -1,0 +1,26 @@
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
+The next step is to add the Docker repository. From the terminal window, create the new file with the command sudo nano /etc/apt/sources.list.d/docker.list and add the following contents:
+
+deb https://apt.dockerproject.org/repo ubuntu-xenial main
+
+Install the dependencies
+Before we install Docker, there are a couple of dependencies that must be taken care of—these can all be handled with a single command. Go back to your terminal window and issue the following:
+
+sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+You're ready to install Docker.
+
+SEE: Netflix on containers: Five ways they'll boost our business, from lower costs to higher productivity
+
+Installing, starting, and testing Docker
+Docker can now be installed with a single command. From the terminal, issue the following:
+
+sudo apt-get install docker-engine
+
+When the installation completes, you'll want to add your user to the Docker group with the command:
+
+sudo usermod -aG docker $USER
+
+Once your user has been added, you can run the docker command as your standard user.
+
+In order to run a Docker command, you must first fire up Docker with the command sudo service docker start. You can now test to make sure Docker is installed and running properly by downloading the hello-world test image. From the terminal window, issue the command docker run hello-world. 
