@@ -1,0 +1,140 @@
+mkdir react-hello-world
+cd react-hello-world
+npm init
+npm i webpack -S
+npm install babel-core --save-dev
+touch webpack.config.js
+	var webpack = require('webpack');
+	var path = require('path');
+
+	var BUILD_DIR = path.resolve(__dirname, 'src/client/public');
+	var APP_DIR = path.resolve(__dirname, 'src/client/app');
+
+	var config = {
+	  entry: APP_DIR + '/index.jsx',
+	  output: {
+	    path: BUILD_DIR,
+	    filename: 'bundle.js'
+	  }
+	};
+
+	module.exports = config;
+
+in ./src/client/app/index.jsx
+	console.log('Hello World!');
+
+./node_modules/.bin/webpack -d
+
+in  src/client/index.html
+
+	<html>
+	  <head>
+	    <meta charset="utf-8">
+	    <title>React.js using NPM, Babel6 and Webpack</title>
+	  </head>
+	  <body>
+	    <div id="app" />
+	    <script src="public/bundle.js" type="text/javascript"></script>
+	  </body>	
+	</html>
+
+npm i babel-loader babel-preset-es2015 babel-preset-react -S
+
+Create a .babelrc file and update it as below
+
+	{
+	  "presets" : ["es2015", "react"]
+	}	
+
+open webpack.config.js file and update it as below
+
+	// Existing Code ....
+	var config = {
+	  // Existing Code ....
+		module : {
+		loaders : [
+		  {
+		    test : /\.jsx?/,
+		    include : APP_DIR,
+		    loader : 'babel-loader'
+		  }
+		]
+		}
+	}
+
+npm i react react-dom -S
+
+Replace the existing console.log statement in the index.jsx with the following content
+
+	import React from 'react';
+	import {render} from 'react-dom';
+
+	class App extends React.Component {
+	  render () {
+	    return <p> Hello React!</p>;
+	  }
+	}
+
+	render(<App/>, document.getElementById('app'));
+
+./node_modules/.bin/webpack -d
+
+./node_modules/.bin/webpack -d --watch
+
+in webpack.config.json
+{
+  // ...
+  "scripts": {
+    "dev": "webpack -d --watch",
+    "build" : "webpack -p"
+  },
+  // ...
+
+
+Create a new file AwesomeComponent.jsx and update it as below
+
+	import React from 'react';
+
+	class AwesomeComponent extends React.Component {
+
+	  constructor(props) {
+	    super(props);
+	    this.state = {likesCount : 0};
+	    this.onLike = this.onLike.bind(this);
+	  }
+
+	  onLike () {
+	    let newLikesCount = this.state.likesCount + 1;
+	    this.setState({likesCount: newLikesCount});
+	  }
+
+	  render() {
+	    return (
+	      <div>
+	        Likes : <span>{this.state.likesCount}</span>
+	        <div><button onClick={this.onLike}>Like Me</button></div>
+	      </div>
+	    );
+	  }
+
+	}
+
+	export default AwesomeComponent;
+
+Then include it in the index.jsx file
+
+	// ...
+	import AwesomeComponent from './AwesomeComponent.jsx';
+	// ...
+	class App extends React.Component {
+	  render () {
+	    return (
+	      <div>
+	        <p> Hello React!</p>
+	        <AwesomeComponent />
+	      </div>
+	    );
+	  }
+	}
+
+	// ...
