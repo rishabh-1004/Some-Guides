@@ -13,7 +13,7 @@ cd $COMPOSER_ROOT/fabric-dev-servers
 cd $COMPOSER_ROOT/developerWorks/iot-perishable-network
 
 #if this doesnt work
-composer network deploy -a dist/rental-agreement.bna -A admin -S adminpw -c PeerAdmin@hlfv1 -f networkadmin.card
+composer network deploy -a dist/basic-sample-network.bna -A admin -S adminpw -c PeerAdmin@hlfv1 -f networkadmin.card
 #try this
 curl -sSL https://hyperledger.github.io/composer/install-hlfv1.sh | bash
 
